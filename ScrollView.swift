@@ -9,13 +9,24 @@
 import Foundation
 import UIKit
 
+@propertyWrapper
+struct Scrollable where View: UIView{
+    var container: View
+    var scrollView: ScrollView
+
+    public init(Direction direction: ScrollView.Direction) {
+        self.scrollView = ScrollView(with: direction)
+        self.container = scrollView.container
+    }
+}
+
 class ScrollView: UIScrollView {
     // MARK: - Attributes -
     /// Scroll View Scroll Direction
     ///
     /// - vertical: Vertical Scroll
     /// - horizontal: Horizontal Scroll
-    /// - both: Scroll in Both Direction ( Vertical + Horizontal )
+    /// - all: Scroll in Both Direction ( Vertical + Horizontal )
     internal enum Direction {
         case vertical
         case horizontal
@@ -45,7 +56,6 @@ class ScrollView: UIScrollView {
             container.removeFromSuperview()
             container = nil
         }
-        lastViewConstraint = nil
     }
 
     // MARK: - Initializations -
@@ -62,14 +72,14 @@ class ScrollView: UIScrollView {
     // MARK: - Layout -
     func setupLayout() {
         let viewDictionary: [String: Any] = ["container": container, "self": self]
-        
+
         /// Abstraction of addConstraints function
         ///
         /// - Parameter withVisualFormat: VFC String
         func addConstraint(withVisualFormat: String) {
            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: withVisualFormat, options: [], metrics: nil, views: viewDictionary))
         }
-        
+
         // Set Constraints according to Direction
         switch direction {
         case .vertical:
