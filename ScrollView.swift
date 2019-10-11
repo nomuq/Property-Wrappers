@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MasterScrollView: UIScrollView {
+class ScrollView: UIScrollView {
     // MARK: - Attributes -
     /// Scroll View Scroll Direction
     ///
