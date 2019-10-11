@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 @propertyWrapper
-struct Scrollable where View: UIView{
-    var container: View
+class Scrollable where View: UIView{
+    var value: View
     var scrollView: ScrollView
 
     public init(Direction direction: ScrollView.Direction) {
         self.scrollView = ScrollView(with: direction)
-        self.container = scrollView.container
+        self.value = scrollView.container
     }
 }
 
